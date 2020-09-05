@@ -1,9 +1,10 @@
 USE [master];
 SET ANSI_NULLS ON; SET QUOTED_IDENTIFIER ON;
+
+IF NOT EXISTS (SELECT * FROM INFORMATION_SCHEMA.ROUTINES WHERE ROUTINE_NAME = 'sp_helpindex2')
+	EXEC ('CREATE PROC dbo.sp_helpindex2 AS SELECT ''stub version, to be replaced''')
 GO
-IF EXISTS ( SELECT *  FROM sys.procedures WHERE object_id = OBJECT_ID(N'[dbo].[sp_helpindex2]') AND type IN (N'P', N'PC') ) DROP PROCEDURE dbo.sp_helpindex2;
-GO
-CREATE PROCEDURE dbo.sp_helpindex2
+ALTER PROCEDURE dbo.sp_helpindex2
 ( 
  @Table sysname
 ,@Schema sysname = 'dbo'
@@ -13,9 +14,6 @@ CREATE PROCEDURE dbo.sp_helpindex2
 )
 
 /*
-
---EXEC sp_helpindex2 @Table = 'CalendarOccupiedTime', @Schema = 'QF' ,@IndexExtendedInfo = 0,@MissingIndexesInfo = 1,@ColumnsInfo = 0
-
 	Yaniv Etrogi 20100328
 	sp_helpindex2 adds the included columns information that is not provided by the original sp_helpindex.
 	
@@ -54,10 +52,6 @@ CREATE PROCEDURE dbo.sp_helpindex2
 
 	Yaniv Etrogi 20190102
 	Add the index_id and data_compression columns to the output
-
-	Send your comments to mailto:yaniv.etrogi@gmail.com or leave your comments at 
-	http://blogs.microsoft.co.il/blogs/yaniv_etrogi/
-	http://www.sqlserverutilities.com	
 */
 AS
 SET NOCOUNT ON; 
